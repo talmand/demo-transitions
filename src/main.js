@@ -1,8 +1,23 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-Vue.config.productionTip = false
+const slideComponents = require.context(
+  './components/slides',
+  false,
+  /Slide[A-Z]\w+\.(vue|js)$/
+);
+
+slideComponents.keys().forEach(fileName => {
+  const componentConfig = slideComponents(fileName);
+
+  Vue.component(
+    fileName.replace(/^\.\/(.*)\.\w+$/, '$1'),
+    componentConfig.default || componentConfig
+  )
+});
+
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
