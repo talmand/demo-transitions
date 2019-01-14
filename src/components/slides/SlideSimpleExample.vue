@@ -17,20 +17,13 @@
     </div>
   </div>
 
-  <p>The most basic example is to wrap an element that has a v-if or v-show controlling its visibility with a transition element.</p>
+  <p>The most basic example is to wrap an element that has a v-if or v-show controlling its visibility with a transition wrapper.</p>
 
-<pre v-text="`<transition>
-  <div v-if='ifToggle'>v-if example</div>
-</transition>`"></pre>
+<pre id="code1"><code class="html">{{ code1 }}</code></pre>
 
     <p>This, in turn, will apply specific v- based classes to the affected elements.</p>
 
-<pre v-text="`.v-enter, .v-leave-to {
-  opacity: 0;
-}
-.v-enter-active, .v-leave-active {
-  transition: 0.5s;
-}`"></pre>
+<pre id="code2"><code class="css">{{ code2 }}</code></pre>
 
 </div>
 </template>
@@ -42,8 +35,24 @@ export default {
   data () {
     return {
       ifToggle: false,
-      showToggle: false
+      showToggle: false,
+      code1: `<transition>
+  <div v-if='ifToggle'>v-if example</div>
+</transition>`,
+      code2: `.v-enter, .v-leave-to {
+  opacity: 0;
+}
+.v-enter-active, .v-leave-active {
+  transition: 0.5s;
+}`
     }
+  },
+
+  mounted () {
+    // eslint-disable-next-line
+    hljs.highlightBlock(document.querySelector('#code1'));
+    // eslint-disable-next-line
+    hljs.highlightBlock(document.querySelector('#code2'));
   }
 }
 </script>

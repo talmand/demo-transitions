@@ -1,3 +1,9 @@
+Tools used:
+https://cli.vuejs.org/
+https://greensock.com/
+https://highlightjs.org/
+https://daneden.github.io/animate.css/
+
 # demo-transitions
 
 ## Project setup

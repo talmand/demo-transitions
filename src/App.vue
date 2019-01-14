@@ -2,9 +2,8 @@
   <div
     id="container"
     :class="[slides[currentSlide], {'dark-mode': isDark}]"
-    :style="`--gradientColor1: ${parseInt(animatedHSLNumber)}; --gradientColor2: ${parseInt(animatedHSLNumber) + 30}`"
   >
-    <options-panel :animations="animations" :isActive="activateOptionsPanel" :slides="slides" />
+    <options-panel :animations="animations" :isActive="activateOptionsPanel" :slides="slides" :styles="styles" />
 
     <transition :name="slideAnimation" mode="out-in" appear>
       <component :is='currentComponent' />
@@ -35,7 +34,8 @@ export default {
       currentComponent: 'slide-title',
       currentSlide: 0,
       isDark: false,
-      slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-css-library', 'slide-javascript-hooks'],
+      slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-dynamic-named-transitions', 'slide-css-library', 'slide-javascript-hooks'],
+      styles: ['an-old-hope', 'atom-one-dark-reasonable', 'codepen-embed', 'default', 'ir-black', 'railscasts', 'sunburst'],
       hslNumber: 0,
       slideAnimation: 'fade'
     }
@@ -72,19 +72,6 @@ export default {
     }
   },
 
-  computed: {
-    animatedHSLNumber: function () {
-      return this.hslNumber.toFixed(0);
-    }
-  },
-
-  watch: {
-    currentSlide: function (value) {
-      // eslint-disable-next-line
-      TweenLite.to(this.$data, 1, { hslNumber: value * 30 });
-    }
-  },
-
   mounted () {
     this.$root.$on('options:skipToSlide', slide => {
       this.currentSlide = slide;
@@ -118,8 +105,6 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
 :root {
-  --gradientColor1: 0;
-  --gradientColor2: 30;
   --slideEnter: 400px;
   --slideLeave: -400px;
   --slideZEnter: 100px;
@@ -141,6 +126,7 @@ html {
 }
 
 body {
+  background-color: #333;
   color: #333;
   font-family: 'Roboto', 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 18px;
@@ -161,7 +147,6 @@ body {
 
 #container {
   align-items: center;
-  background: linear-gradient(to right, hsl(var(--gradientColor1), 100%, 15%) 0%,hsl(var(--gradientColor2), 100%, 15%) 100%);
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -220,11 +205,6 @@ body {
 }
 
 pre {
-  background-color: gray;
-  border: 2px solid black;
-  color: white;
-  margin: 1rem 0;
-  padding: 10px;
   width: calc(100% - 40px);
 }
 

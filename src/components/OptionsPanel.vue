@@ -11,6 +11,11 @@
     <option value="" selected disabled hidden>skip to...</option>
     <option v-for="(slide, index) in slides" :value="index" :key="slide">{{ slide }}</option>
   </select>
+
+  <select class="hljs-styles" v-model="style" @change="changeStyle">
+    <option value="" selected disabled hidden>change code highlight to...</option>
+    <option v-for="style in styles" :value="style" :key="style">{{ style }}</option>
+  </select>
 </div>
 </template>
 
@@ -21,17 +26,32 @@ export default {
   props: {
     animations: Array,
     isActive: Boolean,
-    slides: Array
+    slides: Array,
+    styles: Array
   },
 
   data () {
     return {
       slide: '',
-      animation: ''
+      animation: '',
+      style: ''
     }
   },
 
   methods: {
+    changeStyle: function () {
+      const hljs_styles = document.querySelectorAll('.hljs');
+      
+      hljs_styles.forEach(style => {
+        if (style.getAttribute('title') === this.style) {
+          style.setAttribute('rel', 'stylesheet');
+          style.disabled = false;
+        } else {
+          style.setAttribute('rel', 'alternate stylesheet');
+          style.disabled = true;
+        }
+      });
+    },
     toggleDark: function () {
       document.body.classList.toggle('dark-mode', this.darkMode);
     }
@@ -46,7 +66,7 @@ export default {
 }
 
 #options {
-  background-color: gainsboro;
+  background-color: #333;
   border-right: 7px solid rebeccapurple;
   box-shadow: 0px 0px 40px 10px rgba(0,0,0,0.75);
   display: flex;

@@ -73,6 +73,11 @@ export default {
   position: relative;
   right: 0;
   transform: translate3d(-1px, -1px, 0);
+  transition: background-color 0.5s;
   width: 100px;
+
+  &:hover {
+    background-color: red;
+  }
 }
 </style>
