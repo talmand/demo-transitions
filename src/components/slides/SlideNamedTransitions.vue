@@ -2,7 +2,7 @@
 <div class="slide">
   <h2>Named Transitions</h2>
 
-  <p>Transitions can be named, which will provide for custom classes prefixed with the name instead of the default v. This way different effects can be achieved and applied as desired.</p>
+  <p>Transitions can be named, which will provide for custom classes prefixed with the name instead of the default v. This is how different effects can be achieved and applied as desired.</p>
   
   <h3>Generic Transition</h3>
   <pre id="code1"><code class="html">{{ code1 }} </code></pre>

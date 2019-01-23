@@ -2,19 +2,11 @@
 <div class="slide">
   <h2>A Simple Example</h2>
 
-  <div class="examples">
-    <div class="example">
-      <button @click="ifToggle = !ifToggle">toggle v-if</button>
-      <transition>
-        <div v-if="ifToggle">v-if example</div>
-      </transition>
-    </div>
-    <div class="example">
-      <button @click="showToggle = !showToggle">toggle v-show</button>
-      <transition>
-        <div v-show="showToggle">v-show example</div>
-      </transition>
-    </div>
+  <div class="example">
+    <button @click="ifToggle = !ifToggle">toggle v-if</button>
+    <transition>
+      <div v-if="ifToggle">v-if example</div>
+    </transition>
   </div>
 
   <p>The most basic example is to wrap an element that has a v-if or v-show controlling its visibility with a transition wrapper.</p>
@@ -35,7 +27,6 @@ export default {
   data () {
     return {
       ifToggle: false,
-      showToggle: false,
       code1: `<transition>
   <div v-if='ifToggle'>v-if example</div>
 </transition>`,
@@ -63,15 +54,8 @@ button {
   margin-bottom: 10px;
 }
 
-.examples {
-  display: flex;
-  width: 75%;
-
-  .example {
-    height: 60px;
-    text-align: center;
-    width: 50%;
-  }
+.example {
+  height: 60px;
 }
 
 .v-enter,

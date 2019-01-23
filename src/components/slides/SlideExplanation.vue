@@ -10,7 +10,7 @@
     <li>automatically apply classes for CSS transitions and animations</li>
     <li>integrate 3rd-party CSS animation libraries, such as Animate.css</li>
     <li>use JavaScript to directly manipulate the DOM during transition hooks</li>
-    <li>integrate 3rd-party JavaScript animation libraries, such as Velocity.js</li>
+    <li>integrate 3rd-party JavaScript animation libraries, such as Greensock</li>
   </ul>
 </div>
 </template>

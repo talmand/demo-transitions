@@ -11,8 +11,8 @@
 
     <div id="panel">
       <div class="slides">{{ currentSlide + 1 }} of {{ slides.length }}</div>
-      <button :disabled="currentSlide === 0" @click="prevSlide">prev</button>
-      <button :disabled="currentSlide === slides.length - 1" @click="nextSlide">next</button>
+      <button class="prev-slide" :disabled="currentSlide === 0" @click="prevSlide">prev slide</button>
+      <button class="next-slide" :disabled="currentSlide === slides.length - 1" @click="nextSlide">next slide</button>
     </div>
   </div>
 </template>
@@ -168,9 +168,50 @@ body {
   }
 
   button {
+    background: none;
+    border-style: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
     flex-grow: 1;
-    margin-top: 10px;
-    padding: 10px 0;
+    font-size: 20px;
+    height: 50px;
+    line-height: 50px;
+    margin: 10px 30px;
+    opacity: 0.25;
+    position: relative;
+    transition: 0.5s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .prev-slide {
+    border-left: 7px solid #fff;
+
+    &::before {
+      border-top: 1px solid #fff;
+      content: '';
+      display: block;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 25%;
+    }
+  }
+  .next-slide {
+    border-right: 7px solid #fff;
+
+    &::before {
+      border-top: 1px solid #fff;
+      content: '';
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 25%;
+    }
   }
 }
 
