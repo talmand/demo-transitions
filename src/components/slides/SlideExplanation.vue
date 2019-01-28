@@ -1,8 +1,14 @@
 <template>
 <div class="slide">
-  <h2>What is the transition wrapper?</h2>
+  <h2>What is the transition wrapper/element/component?</h2>
 
-<pre><code class="html">{{ code }}</code></pre>
+<textarea is="pre-code"><transition>
+  <component></component>
+</transition>
+
+<transition>
+  <div v-show="isHidden"></div>
+</transition></textarea>
 
   <p>Vue provides a variety of ways to apply transition effects when items are inserted, updated, or removed from the DOM. This includes tools to:</p>
 
@@ -19,26 +25,11 @@
 export default {
   name: 'slide-explanation',
 
-  data () {
-    return {
-      code: `<transition>
-  <component></component>
-</transition>
-
-<transition>
-  <div v-show="isHidden"></div>
-</transition>
-`
-    }
-  },
-
   mounted () {
-    // eslint-disable-next-line
-    hljs.highlightBlock(document.querySelector('pre code'));
+    document.querySelectorAll('pre code').forEach(preCode => {
+      // eslint-disable-next-line
+      hljs.highlightBlock(preCode);
+    });
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

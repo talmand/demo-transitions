@@ -2,19 +2,24 @@
 <div id="options" :class="{active: isActive}">
   <button @click="toggleDark">toggle light/dark mode</button>
   
-  <select class="slide-animation" v-model="animation" @change="$root.$emit('options:changeSlideTransition', $event.target.value)">
-    <option value="" selected disabled hidden>choose slide transition...</option>
-    <option v-for="(animation, index) in animations" :value="index" :key="animation">{{ animation }}</option>
-  </select>
-
   <select class="slides" v-model="slide" @change="$root.$emit('options:skipToSlide', parseInt($event.target.value))">
     <option value="" selected disabled hidden>skip to...</option>
     <option v-for="(slide, index) in slides" :value="index" :key="slide">{{ slide }}</option>
   </select>
 
+  <select class="slide-animation" v-model="animation" @change="$root.$emit('options:changeSlideTransition', $event.target.value)">
+    <option value="" selected disabled hidden>choose slide transition...</option>
+    <option v-for="(animation, index) in animations" :value="index" :key="animation">{{ animation }}</option>
+  </select>
+
   <select class="hljs-styles" v-model="style" @change="changeStyle">
     <option value="" selected disabled hidden>change code highlight to...</option>
     <option v-for="style in styles" :value="style" :key="style">{{ style }}</option>
+  </select>
+
+  <select class="speeds" v-model="speedFactor" @change="changeSpeed">
+    <option value="" selected disabled hidden>change speed factor...</option>
+    <option v-for="speed in speeds" :value="speed" :key="speed">{{ speed }}x</option>
   </select>
 </div>
 </template>
@@ -27,19 +32,24 @@ export default {
     animations: Array,
     isActive: Boolean,
     slides: Array,
-    styles: Array
+    styles: Array,
+    speeds: Array
   },
 
   data () {
     return {
       slide: '',
       animation: '',
-      style: ''
+      style: '',
+      speedFactor: ''
     }
   },
 
   methods: {
     changeStyle: function () {
+      // this is for the highlight.js library
+      // swaps out the current highlight stylesheet
+      // stylesheets are also available as page styles in the browser
       const hljs_styles = document.querySelectorAll('.hljs');
       
       hljs_styles.forEach(style => {
@@ -52,6 +62,9 @@ export default {
         }
       });
     },
+    changeSpeed: function () {
+      document.body.style.setProperty('--speedFactor', this.speedFactor)
+    },
     toggleDark: function () {
       document.body.classList.toggle('dark-mode', this.darkMode);
     }
@@ -62,13 +75,14 @@ export default {
 <style lang="scss" scoped>
 #options.active {
   transform: translate3d(0, 0, 0);
-  transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 #options {
   background-color: #333;
   border-right: 7px solid rebeccapurple;
-  box-shadow: 0px 0px 40px 10px rgba(0,0,0,0.75);
+  box-shadow: 0 0 40px 10px rgba(0,0,0,0.75);
+  contain: strict;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -76,8 +90,9 @@ export default {
   position: absolute;
   top: 0;
   transform: translate3d(-150%, 0, 0);
-  transition: 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  transition: calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.55, 0.055, 0.675, 0.19);
   width: 300px;
+  will-change: transform;
   z-index: 100;
 
   > * {

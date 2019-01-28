@@ -2,20 +2,27 @@
 <div class="slide">
   <h2>A Simple Example</h2>
 
+  <button class="example-button" @click="ifToggle = !ifToggle">toggle v-if</button>
   <div class="example">
-    <button @click="ifToggle = !ifToggle">toggle v-if</button>
-    <transition>
+    <transition name="fade">
       <div v-if="ifToggle">v-if example</div>
     </transition>
   </div>
 
   <p>The most basic example is to wrap an element that has a v-if or v-show controlling its visibility with a transition wrapper.</p>
 
-<pre id="code1"><code class="html">{{ code1 }}</code></pre>
+<textarea is="pre-code"><transition>
+  <div v-if="ifToggle">v-if example</div>
+</transition></textarea>
 
-    <p>This, in turn, will apply specific v- based classes to the affected elements.</p>
+    <p>This, in turn, will apply v- based classes to the affected elements in a specific sequence.</p>
 
-<pre id="code2"><code class="css">{{ code2 }}</code></pre>
+<textarea is="pre-code">.v-enter, .v-leave-to {
+  opacity: 0;
+}
+.v-enter-active, .v-leave-active {
+  transition: 0.5s;
+}</textarea>
 
 </div>
 </template>
@@ -26,44 +33,22 @@ export default {
 
   data () {
     return {
-      ifToggle: false,
-      code1: `<transition>
-  <div v-if='ifToggle'>v-if example</div>
-</transition>`,
-      code2: `.v-enter, .v-leave-to {
-  opacity: 0;
-}
-.v-enter-active, .v-leave-active {
-  transition: 0.5s;
-}`
+      ifToggle: false
     }
   },
 
   mounted () {
-    // eslint-disable-next-line
-    hljs.highlightBlock(document.querySelector('#code1'));
-    // eslint-disable-next-line
-    hljs.highlightBlock(document.querySelector('#code2'));
+    document.querySelectorAll('pre code').forEach(preCode => {
+      // eslint-disable-next-line
+      hljs.highlightBlock(preCode);
+    });
   }
 }
 </script>
 
 <style lang="scss" scoped>
-button {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
 .example {
   height: 60px;
-}
-
-.v-enter,
-.v-leave-to {
-  opacity: 0;
-}
-.v-enter-active,
-.v-leave-active {
-  transition: 0.5s;
+  line-height: 60px;
 }
 </style>

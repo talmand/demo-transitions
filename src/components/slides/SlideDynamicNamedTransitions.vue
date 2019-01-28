@@ -1,5 +1,11 @@
 <template>
 <div class="slide">
+  <div class="bg-cards">
+    <transition :name="currentTransition" :mode="currentMode">
+      <div v-if="toggle" class="rick" key="rick"></div>
+      <div v-else class="picklerick" key="picklerick"></div>
+    </transition>
+  </div>
   <h2>Dynamic Named Transitions</h2>
 
   <p>It is possible to change both transition names and modes with dynamic properties driven by data. The data can be reactive to the state of the app allowing for a great deal of control over switching elements and components.</p>
@@ -21,14 +27,17 @@
 
   <div class="cards">
     <transition :name="currentTransition" :mode="currentMode">
-      <div v-if="toggle" class="cardA" key="A">A</div>
-      <div v-else class="cardB" key="B">B</div>
+      <div v-if="toggle" class="rick" key="rick"></div>
+      <div v-else class="picklerick" key="picklerick"></div>
     </transition>
   </div>
 
-  <button @click="toggle = !toggle">toggle</button>
+  <button class="example-button" @click="toggle = !toggle">toggle</button>
 
-  <pre id="code1"><code class="html">{{ code1 }} </code></pre>
+<textarea is="pre-code"><transition :name="currentTransition" :mode="currentMode">
+  <div v-if="toggle" class="rick" key="rick"></div>
+  <div v-else class="picklerick" key="picklerick"></div>
+</transition></textarea>
 </div>
 </template>
 
@@ -40,17 +49,15 @@ export default {
     return {
       currentTransition: '',
       currentMode: '',
-      toggle: true,
-      code1: `<transition :name="currentTransition" :mode="currentMode">
-  <div v-if="toggle" class="card" key="A">A</div>
-  <div v-else class="card" key="B">B</div>
-</transition>`
+      toggle: true
     }
   },
 
   mounted () {
-    // eslint-disable-next-line
-    hljs.highlightBlock(document.querySelector('#code1 code'));
+    document.querySelectorAll('pre code').forEach(preCode => {
+      // eslint-disable-next-line
+      hljs.highlightBlock(preCode);
+    });
   }
 }
 </script>
@@ -72,31 +79,51 @@ export default {
     text-align: right;
   }
 }
+
+.bg-cards {
+  height: 100%;
+  left: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: scaleX(-1);
+  width: 100%;
+
+  .rick,
+  .picklerick {
+    border-style: none;
+    height: 100%;
+    width: 100%;
+  }
+}
 .cards {
   height: 180px;
   margin: 20px 0;
   position: relative;
   width: 180px;
-
-  .cardA,
-  .cardB {
-    background-color: #fff;
-    border: 7px solid red;
-    border-radius: 10px;
-    color: red;
-    font-size: 100px;
-    height: 180px;
-    left: 0;
-    line-height: 160px;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 180px;
+}
+.rick,
+.picklerick {
+  background: {
+    position: center;
+    repeat: no-repeat;
+    size: contain;
   }
-
-  .cardB {
-    border-color: green;
-    color: green;
-  }
+  border-radius: 10px;
+  height: 180px;
+  left: 0;
+  line-height: 160px;
+  position: absolute;
+  top: 0;
+  width: 180px;
+}
+.rick {
+  background-image: url('/images/rick.png');
+  border: 7px solid #abd5ea;
+}
+.picklerick {
+  background-image: url('/images/picklerick.png');
+  border: 7px solid #4e8125;
 }
 </style>

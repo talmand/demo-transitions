@@ -2,18 +2,18 @@
 <div class="slide">
   <h2>How Classes Are Applied</h2>
 
-  <transition mode="out-in">
+  <transition name="fade" mode="out-in">
     <div v-if="hideHomer" class="img-container" key="noHomer">
       <img alt="CSS classes graphic" src="~@/assets/transition.png" width="75%" />
-      <button @click="hideHomer = !hideHomer">another example</button>
+      <button class="example-button" @click="hideHomer = !hideHomer">another example</button>
     </div>
     
     <div v-else class="img-container" key="homer">
       <img alt="homer appears" :src="homerSlides[currentHomer].img" width="75%" />
       <div v-html="homerSlides[currentHomer].text"></div>
       <div>
-        <button @click="currentHomer--" :disabled="currentHomer === 0">&lt;</button>
-        <button @click="currentHomer++" :disabled="currentHomer === homerSlides.length - 1">&gt;</button>
+        <button class="prev" @click="currentHomer--" :disabled="currentHomer === 0">&lsaquo;</button>
+        <button class="next" @click="currentHomer++" :disabled="currentHomer === homerSlides.length - 1">&rsaquo;</button>
       </div>
     </div>
   </transition>
@@ -100,8 +100,14 @@ export default {
   }
 }
 
-.v-enter,
-.v-leave-to { opacity: 0; }
-.v-enter-active,
-.v-leave-active { transition: 0.5s; }
+.prev,
+.next {
+  background: 0;
+  border-style: none;
+  cursor: pointer;
+  font-size: 40px;
+  line-height: 100%;
+  margin: 0;
+  padding: 10px 20px;
+}
 </style>

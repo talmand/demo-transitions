@@ -1,17 +1,38 @@
 <template>
 <div class="slide">
   <h2>Javascript Hooks</h2>
-  <button @click="show = !show">toggle</button>
+  <p>Much like custom CSS transition classes, Vue provides for Javascript hooks to be used with a third-party animation library. This example uses <a href="https://greensock.com/">Greensock</a>.</p>
   <div class="container">
-    <transition
-      v-on:before-enter="beforeEnter"
-      v-on:enter="enter"
-      v-on:leave="leave"
-      v-bind:css="false"
-    >
-      <div v-show="show" class="box"></div>
-    </transition>
+    <button class="example-button" @click="show = !show">toggle</button>
+    <div class="box-container">
+      <transition
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @leave="leave"
+      >
+        <div v-show="show" class="box"></div>
+      </transition>
+    </div>
   </div>
+
+<textarea is="pre-code"><transition @before-enter="beforeEnter" @enter="enter" @leave="leave">
+  <div v-show="show" class="box"></div>
+</transition>
+</textarea>
+
+<textarea class="js" is="pre-code">beforeEnter: function (el) {
+  el.style.bottom = '500px';
+  el.style.opacity = 0;
+},
+enter: function (el) {
+  TweenLite.to(el, 1, { ease: Bounce.easeOut, bottom: 0 });
+  TweenLite.to(el, 1, { opacity: 1 });
+},
+leave: function (el) {
+  TweenLite.to(el, 1, { ease: Bounce.easeIn, bottom: 500 });
+  TweenLite.to(el, 1, { opacity: 0 });
+}
+</textarea>
 </div>
 </template>
 
@@ -26,34 +47,51 @@ export default {
   },
 
   methods: {
-    beforeEnter: function (el, done) {
+    beforeEnter: function (el) {
       el.style.bottom = '500px';
       el.style.opacity = 0;
     },
-    enter: function (el, done) {
+    enter: function (el) {
+      // eslint-disable-next-line
       TweenLite.to(el, 1, {
+        // eslint-disable-next-line
         ease: Bounce.easeOut,
         bottom: 0
       });
+      // eslint-disable-next-line
       TweenLite.to(el, 1, {
         opacity: 1
       });
     },
-    leave: function (el, done) {
+    leave: function (el) {
+      // eslint-disable-next-line
       TweenLite.to(el, 1, {
+        // eslint-disable-next-line
         ease: Bounce.easeIn,
         bottom: 500
       });
+      // eslint-disable-next-line
       TweenLite.to(el, 1, {
         opacity: 0
       });
     }
+  },
+
+  mounted () {
+    document.querySelectorAll('pre code').forEach(preCode => {
+      // eslint-disable-next-line
+      hljs.highlightBlock(preCode);
+    });
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .container {
+  align-items: center;
+  display: flex;
+}
+.box-container {
   border: {
     color: rebeccapurple;
     radius: 7px;
@@ -73,11 +111,7 @@ export default {
   position: relative;
   right: 0;
   transform: translate3d(-1px, -1px, 0);
-  transition: background-color 0.5s;
+  transition: background-color calc(var(--speedNormal) * var(--speedFactor));
   width: 100px;
-
-  &:hover {
-    background-color: red;
-  }
 }
 </style>
