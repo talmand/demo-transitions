@@ -26,6 +26,8 @@ export default {
   name: 'slide-explanation',
 
   mounted () {
+    document.body.style.setProperty('--bodyBgColor', '#755E39');
+
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);

@@ -21,6 +21,8 @@ export default {
   name: 'slide-named-transitions',
 
   mounted () {
+    document.body.style.setProperty('--bodyBgColor', '#274231');
+    
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);

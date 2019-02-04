@@ -4,22 +4,22 @@
   
   <select class="slides" v-model="slide" @change="$root.$emit('options:skipToSlide', parseInt($event.target.value))">
     <option value="" selected disabled hidden>skip to...</option>
-    <option v-for="(slide, index) in slides" :value="index" :key="slide">{{ slide }}</option>
+    <option v-for="(slide, index) in slides" :value="index" :key="index">{{ slide }}</option>
   </select>
 
   <select class="slide-animation" v-model="animation" @change="$root.$emit('options:changeSlideTransition', $event.target.value)">
     <option value="" selected disabled hidden>choose slide transition...</option>
-    <option v-for="(animation, index) in animations" :value="index" :key="animation">{{ animation }}</option>
+    <option v-for="(animation, index) in animations" :value="index" :key="index">{{ animation }}</option>
   </select>
 
   <select class="hljs-styles" v-model="style" @change="changeStyle">
     <option value="" selected disabled hidden>change code highlight to...</option>
-    <option v-for="style in styles" :value="style" :key="style">{{ style }}</option>
+    <option v-for="(style, index) in styles" :value="style" :key="index">{{ style }}</option>
   </select>
 
   <select class="speeds" v-model="speedFactor" @change="changeSpeed">
     <option value="" selected disabled hidden>change speed factor...</option>
-    <option v-for="speed in speeds" :value="speed" :key="speed">{{ speed }}x</option>
+    <option v-for="(speed, index) in speeds" :value="speed" :key="index">{{ speed }}%</option>
   </select>
 </div>
 </template>
@@ -32,8 +32,7 @@ export default {
     animations: Array,
     isActive: Boolean,
     slides: Array,
-    styles: Array,
-    speeds: Array
+    styles: Array
   },
 
   data () {
@@ -41,7 +40,8 @@ export default {
       slide: '',
       animation: '',
       style: '',
-      speedFactor: ''
+      speedFactor: '',
+      speeds: [0, 50, 100, 200]
     }
   },
 
@@ -75,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 #options.active {
   transform: translate3d(0, 0, 0);
-  transition: calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: var(--speedNormal) cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 #options {
@@ -90,7 +90,7 @@ export default {
   position: absolute;
   top: 0;
   transform: translate3d(-150%, 0, 0);
-  transition: calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  transition: var(--speedNormal) cubic-bezier(0.55, 0.055, 0.675, 0.19);
   width: 300px;
   will-change: transform;
   z-index: 100;

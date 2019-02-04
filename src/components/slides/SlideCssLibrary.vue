@@ -42,6 +42,8 @@ export default {
   },
 
   mounted () {
+    document.body.style.setProperty('--bodyBgColor', '#44364f');
+
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);

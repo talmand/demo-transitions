@@ -78,6 +78,8 @@ export default {
   },
 
   mounted () {
+    document.body.style.setProperty('--bodyBgColor', '#422827');
+
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);
@@ -111,7 +113,7 @@ export default {
   position: relative;
   right: 0;
   transform: translate3d(-1px, -1px, 0);
-  transition: background-color calc(var(--speedNormal) * var(--speedFactor));
+  transition: background-color var(--speedNormal);
   width: 100px;
 }
 </style>

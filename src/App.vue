@@ -8,7 +8,6 @@
       :isActive="activateOptionsPanel"
       :slides="slides"
       :styles="styles"
-      :speeds="speeds"
     />
 
     <transition :name="slideAnimation" mode="out-in" appear>
@@ -52,10 +51,8 @@ export default {
       isDark: false,
       nextActive: false,
       prevActive: false,
-      speeds: [0.0, 0.25, 0.5, 1, 1.5, 3.0, 5.0],
       slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-dynamic-named-transitions', 'slide-css-library', 'slide-javascript-hooks', 'slide-list-transitions'],
       styles: ['an-old-hope', 'atom-one-dark-reasonable', 'codepen-embed', 'default', 'ir-black', 'railscasts', 'sunburst'],
-      hslNumber: 0,
       slideAnimation: 'fade'
     }
   },
@@ -175,10 +172,7 @@ export default {
   --rotateLeave: -90deg;
   --spinEnter: 180deg;
   --spinLeave: -180deg;
-  --speedFactor: 1.0;
-  --speedFast: 100ms;
-  --speedNormal: 300ms;
-  --speedSlow: 400ms;
+  --bodyBgColor: #333;
 }
 
 html {
@@ -192,7 +186,12 @@ html {
 }
 
 body {
-  background-color: #333;
+  --speedFactor: 100;
+  --speedFast: calc(100ms / (var(--speedFactor) / 100));;
+  --speedNormal: calc(300ms / (var(--speedFactor) / 100));
+  --speedSlow: calc(400ms / (var(--speedFactor) / 100));
+
+  background-color: var(--bodyBgColor);
   color: #333;
   font-family: 'Roboto', 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 18px;
@@ -200,6 +199,11 @@ body {
   min-height: 100vh;
   overflow: hidden;
   padding: 0;
+  transition: background-color var(--speedSlow);
+}
+
+p {
+  margin: 0 0 10px;
 }
 
 .dark-mode {
@@ -235,7 +239,7 @@ body {
   font-size: 18px;
   margin: 10px 10px 13px;
   overflow: hidden;
-  padding: 10px 40px;
+  padding: 5px 40px;
   position: relative;
   z-index: 1;
 
@@ -245,12 +249,10 @@ body {
       width: 100%;
     }
   }
-
   &:active {
     border-bottom-width: 1px;
     margin-top: 12px;
   }
-
   &::before {
     background: rebeccapurple;
     content: '';
@@ -261,9 +263,20 @@ body {
     top: 50%;
     transform: translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, 40deg);
     transform-origin: center;
-    transition: calc(var(--speedNormal) * var(--speedFactor));
+    transition: var(--speedNormal);
     width: 60%;
     z-index: -2;
+  }
+
+  &.negative {
+    background: lighten(red, 20);
+    border: 3px solid darken(red, 10);
+    box-shadow: 0 3px 0 3px darken(red, 10);
+    color: lighten(red, 40);
+
+    &::before {
+      background: red;
+    }
   }
 }
 
@@ -295,7 +308,7 @@ body {
     opacity: 0.25;
     overflow: hidden;
     position: relative;
-    transition: calc(var(--speedNormal) * var(--speedFactor));
+    transition: var(--speedNormal);
 
     &.active,
     &:hover {
@@ -313,7 +326,7 @@ body {
       left: 0;
       position: absolute;
       top: 0;
-      transition: calc(var(--speedNormal) * var(--speedFactor));
+      transition: var(--speedNormal);
       width: 25%;
     }
     &::after {
@@ -327,7 +340,7 @@ body {
       position: absolute;
       top: -30px;
       transform: rotate3d(0, 0, 1, -20deg);
-      transition: calc(var(--speedNormal) * var(--speedFactor));
+      transition: var(--speedNormal);
     }
     &.active,
     &:hover {
@@ -352,7 +365,7 @@ body {
       position: absolute;
       right: 0;
       top: 0;
-      transition: calc(var(--speedNormal) * var(--speedFactor));
+      transition: var(--speedNormal);
       width: 25%;
     }
     &::after {
@@ -366,7 +379,7 @@ body {
       right: 15%;
       top: -30px;
       transform: rotate3d(0, 0, 1, 20deg);
-      transition: calc(var(--speedNormal) * var(--speedFactor));
+      transition: var(--speedNormal);
     }
     &.active,
     &:hover {
@@ -397,7 +410,7 @@ body {
   overflow: hidden;
   padding: 2rem;
   position: relative;
-  transition: calc(var(--speedFast) * var(--speedFactor));
+  transition: var(--speedFast);
   width: 75vw;
 
   h2, h3 {
@@ -416,25 +429,25 @@ body {
 
 // component change transitions
 .inout-enter { opacity: 0; transform: perspective(500px) translate3d(var(--slideEnter), 0, var(--slideZEnter)); }
-.inout-enter-active { transition: opacity calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.645, 0.045, 0.355, 1), transform calc(var(--speedNormal) * var(--speedFactor)); }
-.inout-leave-active { transition: opacity calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.645, 0.045, 0.355, 1), transform calc(var(--speedNormal) * var(--speedFactor)); }
+.inout-enter-active { transition: opacity var(--speedNormal) cubic-bezier(0.645, 0.045, 0.355, 1), transform var(--speedNormal); }
+.inout-leave-active { transition: opacity var(--speedNormal) cubic-bezier(0.645, 0.045, 0.355, 1), transform var(--speedNormal); }
 .inout-leave-to { opacity: 0; transform: perspective(500px) translate3d(var(--slideLeave), 0, var(--slideZLeave)); }
 
 .fade-enter,
 .fade-leave-to { opacity: 0; }
 .fade-enter-active,
-.fade-leave-active { transition: calc(var(--speedNormal) * var(--speedFactor)); }
+.fade-leave-active { transition: var(--speedNormal); }
 
 .slide-enter { opacity: 0; transform: translate3d(var(--slideEnter), 0, 0); }
 .slide-enter-active,
-.slide-leave-active { transition: calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+.slide-leave-active { transition: var(--speedNormal) cubic-bezier(0.68, -0.55, 0.265, 1.55); }
 .slide-leave-to { opacity: 0; transform: translate3d(var(--slideLeave), 0, 0); }
 
 .rotate-enter { transform: perspective(2000px) rotate3d(0, 1, 0, var(--rotateEnter)); }
-.rotate-enter-active, .rotate-leave-active { transition: calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.645, 0.045, 0.355, 1); }
+.rotate-enter-active, .rotate-leave-active { transition: var(--speedNormal) cubic-bezier(0.645, 0.045, 0.355, 1); }
 .rotate-leave-to { transform: perspective(2000px) rotate3d(0, 1, 0, var(--rotateLeave)); }
 
 .spin-enter { transform: perspective(500px) rotate3d(0, 0, 1, var(--spinEnter)); }
-.spin-enter-active, .spin-leave-active { transition: calc(var(--speedNormal) * var(--speedFactor)) cubic-bezier(0.645, 0.045, 0.355, 1); }
+.spin-enter-active, .spin-leave-active { transition: var(--speedNormal) cubic-bezier(0.645, 0.045, 0.355, 1); }
 .spin-leave-to { transform: perspective(500px) rotate3d(0, 0, 1, var(--spinLeave)); }
 </style>
