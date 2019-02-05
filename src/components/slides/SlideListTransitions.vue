@@ -14,14 +14,14 @@
     <button class="example-button negative" @click="states = []">clear</button>
   </div>
 
-  <transition-group name="list" tag="ul" class="states-list">
+  <transition-group name="list" tag="ul" class="states-list" @leave="listLeave">
     <li class="header" key="header">
       <span :class="{active: currentSort === 's'}" @click="sortStates(0)">state</span>
       <span :class="{active: currentSort === 'p'}" @click="sortStates(1)">population</span>
       <span :class="{active: currentSort === 'b'}" @click="sortStates(2)">births</span>
       <span :class="{active: currentSort === 'd'}" @click="sortStates(3)">deaths</span>
     </li>
-    <li class="list-item" v-for="state in states" :key="state[5]">
+    <li class="list-item" v-for="(state, index) in states" :key="state[5]" :data-index="index">
       <span>{{ state[0] }}</span> <span>{{ state[1] }}</span> <span>{{ state[2] }}</span> <span>{{ state[3] }}</span>
     </li>
   </transition-group>
@@ -52,13 +52,22 @@ export default {
   },
 
   methods: {
+    listLeave: function (element) {
+      element.style.transitionDelay = `${element.dataset.index * 0.25}s`;
+    },
     selectClickHandler: function () {
-      let selected = this.populations.find(element => {
+      let alreadySelected = this.states.find(element => {
         return element[0] === this.stateOption;
       });
+      
+      if (!alreadySelected) {
+        let selected = this.populations.find(element => {
+          return element[0] === this.stateOption;
+        });
 
-      this.states.push(selected);
-      this.sortStates(0);
+        this.states.push(selected);
+        this.sortStates(0);
+      }
     },
     sortStates: function (index) {
       this.currentSortIndex = index;
@@ -99,7 +108,7 @@ export default {
 
 .states-list {
   border: 2px solid #333;
-  height: 300px;
+  height: 200px;
   list-style-type: none;
   margin: 0;
   overflow-x: hidden;
@@ -110,7 +119,6 @@ export default {
     display: flex;
     font-size: 14px;
     justify-content: space-around;
-    transition: 1s;
 
     &:nth-child(odd) {
       background-color: gainsboro;
@@ -136,6 +144,7 @@ export default {
 
     span {
       padding: 10px 10px 0 10px;
+      transition: var(--speedNormal);
     }
 
     .active {
@@ -146,13 +155,13 @@ export default {
 }
 
 .list-enter-active, .list-leave-active {
-  transition: 1s;
+  transition: var(--speedSlow);
 }
 .list-enter, .list-leave-to {
   opacity: 0;
   transform: translate3d(40px, 0, 0);
 }
 .list-move {
-  transition: transform 1s;
+  transition: transform var(--speedSlow);
 }
 </style>

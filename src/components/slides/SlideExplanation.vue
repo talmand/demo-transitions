@@ -1,6 +1,6 @@
 <template>
 <div class="slide">
-  <h2>What is the transition wrapper/element/component?</h2>
+  <h2>What is the transition component?</h2>
 
 <textarea is="pre-code"><transition>
   <component></component>

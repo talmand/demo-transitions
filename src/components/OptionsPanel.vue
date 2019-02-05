@@ -1,5 +1,6 @@
 <template>
 <div id="options" :class="{active: isActive}">
+  <button @click="togglePanel" class="toggle-panel">?</button>
   <button @click="toggleDark">toggle light/dark mode</button>
   
   <select class="slides" v-model="slide" @change="$root.$emit('options:skipToSlide', parseInt($event.target.value))">
@@ -67,6 +68,9 @@ export default {
     },
     toggleDark: function () {
       document.body.classList.toggle('dark-mode', this.darkMode);
+    },
+    togglePanel: function () {
+      this.$parent.activateOptionsPanel = !this.$parent.activateOptionsPanel;
     }
   }
 }
@@ -82,14 +86,13 @@ export default {
   background-color: #333;
   border-right: 7px solid rebeccapurple;
   box-shadow: 0 0 40px 10px rgba(0,0,0,0.75);
-  contain: strict;
   display: flex;
   flex-direction: column;
   height: 100vh;
   left: 0;
   position: absolute;
   top: 0;
-  transform: translate3d(-150%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
   transition: var(--speedNormal) cubic-bezier(0.55, 0.055, 0.675, 0.19);
   width: 300px;
   will-change: transform;
@@ -99,5 +102,18 @@ export default {
     margin: 10px;
     padding: 10px;
   }
+}
+
+.toggle-panel {
+  background: none;
+  border-radius: 7px;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.25;
+  position: absolute;
+  right: -60px;
 }
 </style>

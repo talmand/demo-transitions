@@ -9,7 +9,7 @@
     </transition>
   </div>
 
-  <p>The most basic example is to wrap an element that has a v-if or v-show controlling its visibility with a transition wrapper.</p>
+  <p>The most basic example is to wrap an element that has a v-if or v-show controlling its visibility with a transition component.</p>
 
 <textarea is="pre-code"><transition>
   <div v-if="ifToggle">v-if example</div>
