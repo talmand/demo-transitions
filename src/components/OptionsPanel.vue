@@ -78,6 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 #options.active {
+  box-shadow: 0 0 40px 10px rgba(0,0,0,0.75);
   transform: translate3d(0, 0, 0);
   transition: var(--speedNormal) cubic-bezier(0.215, 0.61, 0.355, 1);
 }
@@ -85,7 +86,7 @@ export default {
 #options {
   background-color: #333;
   border-right: 7px solid rebeccapurple;
-  box-shadow: 0 0 40px 10px rgba(0,0,0,0.75);
+  box-shadow: 0 0 0 0 rgba(0,0,0,0.75);
   display: flex;
   flex-direction: column;
   height: 100vh;
