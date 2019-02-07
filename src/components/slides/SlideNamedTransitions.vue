@@ -2,7 +2,7 @@
 <div class="slide">
   <h2>Named Transitions</h2>
 
-  <p>Transitions can be named, which will provide for custom classes prefixed with the name instead of the default v. This is how different effects can be achieved and applied as desired.</p>
+  <p>Transitions can be named, which will apply custom classes prefixed with the name instead of the default v-classes. This is how different transition effects can be pre-built and applied as needed.</p>
   
   <h3>Generic Transition</h3>
 <textarea is="pre-code" class="pre-top"><transition></textarea>

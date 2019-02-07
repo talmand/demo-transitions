@@ -20,7 +20,7 @@
 
   <select class="speeds" v-model="speedFactor" @change="changeSpeed">
     <option value="" selected disabled hidden>change speed factor...</option>
-    <option v-for="(speed, index) in speeds" :value="speed" :key="index">{{ speed }}%</option>
+    <option v-for="(speed, index) in speeds" :value="speed.factor" :key="index">{{ speed.display }}</option>
   </select>
 </div>
 </template>
@@ -42,7 +42,12 @@ export default {
       animation: '',
       style: '',
       speedFactor: '',
-      speeds: [0, 50, 100, 200]
+      speeds: [
+        {factor: 0, display: '0%'},
+        {factor: 0.5, display: '50%'},
+        {factor: 1, display: '100%'},
+        {factor: 2, display: '200%'}
+      ]
     }
   },
 

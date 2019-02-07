@@ -51,7 +51,7 @@ export default {
       isDark: false,
       nextActive: false,
       prevActive: false,
-      slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-dynamic-named-transitions', 'slide-css-library', 'slide-javascript-hooks', 'slide-list-transitions', 'slide-list-transitions-code'],
+      slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-dynamic-named-transitions', 'slide-css-library', 'slide-javascript-hooks', 'slide-list-transitions', 'slide-list-transitions-code', 'slide-control-speed'],
       styles: ['an-old-hope', 'atom-one-dark-reasonable', 'codepen-embed', 'default', 'ir-black', 'railscasts', 'sunburst'],
       slideAnimation: 'fade'
     }
@@ -89,7 +89,7 @@ export default {
     getHash: function () {
       // here we have a simple router
       // based on the hash matching an available slide
-      // should I just use this for changingg slides??
+      // should I just use this for changing slides??
       let hash = window.location.hash.replace(/^#/, '');
     
       if (this.slides.includes(hash)) {
@@ -187,9 +187,9 @@ html {
 
 body {
   --speedFactor: 100;
-  --speedFast: calc(100ms / (var(--speedFactor) / 100));;
-  --speedNormal: calc(300ms / (var(--speedFactor) / 100));
-  --speedSlow: calc(400ms / (var(--speedFactor) / 100));
+  --speedFast: calc(100ms / var(--speedFactor));
+  --speedNormal: calc(300ms / var(--speedFactor));
+  --speedSlow: calc(500ms / var(--speedFactor));
 
   background-color: var(--bodyBgColor);
   color: #333;

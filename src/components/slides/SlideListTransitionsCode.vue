@@ -16,7 +16,7 @@
   transform: translate3d(40px, 0, 0);
 }
 .list-move {
-  transition: transform var(--speedSlow);
+  transition: transform 0.5s;
 }</textarea>
 
 <textarea is="pre-code">listLeave: function (element) {
