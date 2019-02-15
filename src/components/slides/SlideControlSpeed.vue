@@ -3,10 +3,10 @@
   <h2>Control Transition Speed</h2>
 
 <textarea is="pre-code">body {
-  --speedFactor: 100;
-  --speedFast: calc(100ms / var(--speedFactor));
-  --speedNormal: calc(300ms / var(--speedFactor));
-  --speedSlow: calc(500ms / var(--speedFactor));
+  --speedFactor: 1;
+  --speedFast: calc(100ms * var(--speedFactor));
+  --speedNormal: calc(300ms * var(--speedFactor));
+  --speedSlow: calc(500ms * var(--speedFactor));
 }
 </textarea>
 

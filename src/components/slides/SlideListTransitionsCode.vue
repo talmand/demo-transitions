@@ -9,7 +9,7 @@
 </transition-group></textarea>
 
 <textarea is="pre-code">.list-enter-active, .list-leave-active {
-  transition: var(--speedSlow);
+  transition: 0.5s;
 }
 .list-enter, .list-leave-to {
   opacity: 0;

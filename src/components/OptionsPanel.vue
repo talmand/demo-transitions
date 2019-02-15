@@ -3,23 +3,23 @@
   <button @click="togglePanel" class="toggle-panel">?</button>
   <button @click="toggleDark">toggle light/dark mode</button>
   
-  <select class="slides" v-model="slide" @change="$root.$emit('options:skipToSlide', parseInt($event.target.value))">
-    <option value="" selected disabled hidden>skip to...</option>
+  <label for="slides">skip to slide...</label>
+  <select id="slides" class="slides" v-model="slide" @change="$root.$emit('options:skipToSlide', parseInt($event.target.value))">
     <option v-for="(slide, index) in slides" :value="index" :key="index">{{ slide }}</option>
   </select>
 
-  <select class="slide-animation" v-model="animation" @change="$root.$emit('options:changeSlideTransition', $event.target.value)">
-    <option value="" selected disabled hidden>choose slide transition...</option>
+  <label for="animations">choose slide transition...</label>
+  <select id="animations" class="slide-animation" v-model="animation" @change="$root.$emit('options:changeSlideTransition', $event.target.value)">
     <option v-for="(animation, index) in animations" :value="index" :key="index">{{ animation }}</option>
   </select>
 
-  <select class="hljs-styles" v-model="style" @change="changeStyle">
-    <option value="" selected disabled hidden>change code highlight to...</option>
+  <label for="styles">change code highlight to...</label>
+  <select id="styles" class="hljs-styles" v-model="style" @change="changeStyle">
     <option v-for="(style, index) in styles" :value="style" :key="index">{{ style }}</option>
   </select>
 
-  <select class="speeds" v-model="speedFactor" @change="changeSpeed">
-    <option value="" selected disabled hidden>change speed factor...</option>
+  <label for="speeds">change speed factor...</label>
+  <select id="speeds" class="speeds" v-model="speedFactor" @change="changeSpeed">
     <option v-for="(speed, index) in speeds" :value="speed.factor" :key="index">{{ speed.display }}</option>
   </select>
 </div>
@@ -38,15 +38,15 @@ export default {
 
   data () {
     return {
-      slide: '',
-      animation: '',
-      style: '',
-      speedFactor: '',
+      slide: 0,
+      animation: 1,
+      style: 'atom-one-dark-reasonable',
+      speedFactor: 1,
       speeds: [
         {factor: 0, display: '0%'},
-        {factor: 0.5, display: '50%'},
+        {factor: 2, display: '50%'},
         {factor: 1, display: '100%'},
-        {factor: 2, display: '200%'}
+        {factor: 0.5, display: '200%'}
       ]
     }
   },
@@ -104,7 +104,13 @@ export default {
   will-change: transform;
   z-index: 100;
 
-  > * {
+  label {
+    color: #fff;
+    font-size: 16px;
+    margin: 10px 10px 0 10px;
+  }
+  button,
+  select {
     margin: 10px;
     padding: 10px;
   }

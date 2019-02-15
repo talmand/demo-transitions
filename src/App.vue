@@ -51,7 +51,7 @@ export default {
       isDark: false,
       nextActive: false,
       prevActive: false,
-      slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-dynamic-named-transitions', 'slide-css-library', 'slide-javascript-hooks', 'slide-list-transitions', 'slide-list-transitions-code', 'slide-control-speed'],
+      slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-dynamic-named-transitions', 'slide-css-library', 'slide-javascript-hooks', 'slide-list-transitions', 'slide-list-transitions-code', 'slide-control-speed', 'slide-credits'],
       styles: ['an-old-hope', 'atom-one-dark-reasonable', 'codepen-embed', 'default', 'ir-black', 'railscasts', 'sunburst'],
       slideAnimation: 'fade'
     }
@@ -161,7 +161,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy|Roboto:400,700');
 
 :root {
   --slideEnter: 400px;
@@ -186,10 +186,10 @@ html {
 }
 
 body {
-  --speedFactor: 100;
-  --speedFast: calc(100ms / var(--speedFactor));
-  --speedNormal: calc(300ms / var(--speedFactor));
-  --speedSlow: calc(500ms / var(--speedFactor));
+  --speedFactor: 1;
+  --speedFast: calc(100ms * var(--speedFactor));
+  --speedNormal: calc(300ms * var(--speedFactor));
+  --speedSlow: calc(500ms * var(--speedFactor));
 
   background-color: var(--bodyBgColor);
   color: #333;

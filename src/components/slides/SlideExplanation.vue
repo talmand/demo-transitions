@@ -3,11 +3,12 @@
   <h2>What is the transition component?</h2>
 
 <textarea is="pre-code"><transition>
-  <component></component>
+  <div v-show="isHidden"></div>
 </transition>
 
 <transition>
-  <div v-show="isHidden"></div>
+  <div v-if="isHidden" key="if"></div>
+  <div v-else key="else"></div>
 </transition></textarea>
 
   <p>Vue provides a variety of ways to apply transition effects when items are inserted, updated, or removed from the DOM. This includes tools to:</p>
