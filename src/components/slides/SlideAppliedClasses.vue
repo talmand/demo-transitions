@@ -85,7 +85,7 @@ export default {
     }
   },
 
-  mounted: function () {
+  activated: function () {
     document.body.style.setProperty('--bodyBgColor', '#422827');
   }
 }

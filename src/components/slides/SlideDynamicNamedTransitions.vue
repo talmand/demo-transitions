@@ -13,15 +13,15 @@
   <div class="panel">
     <div class="transitions">
       <div>Transitions</div>
-      <label>None <input type="radio" v-model="currentTransition" value="" /></label>
-      <label>Fade <input type="radio" v-model="currentTransition" value="fade" /></label>
-      <label>Slide <input type="radio" v-model="currentTransition" value="slide" /></label>
+      <label>None <input type="radio" v-model="currentTransition" value="" /><span></span></label>
+      <label>Fade <input type="radio" v-model="currentTransition" value="fade" /><span></span></label>
+      <label>Slide <input type="radio" v-model="currentTransition" value="slide" /><span></span></label>
     </div>
     <div class="modes">
       <div>Modes</div>
-      <label><input type="radio" v-model="currentMode" value="" /> None</label>
-      <label><input type="radio" v-model="currentMode" value="out-in" /> Out-In</label>
-      <label><input type="radio" v-model="currentMode" value="in-out" /> In-Out</label>
+      <label><input type="radio" v-model="currentMode" value="" /><span></span> None</label>
+      <label><input type="radio" v-model="currentMode" value="out-in" /><span></span> Out-In</label>
+      <label><input type="radio" v-model="currentMode" value="in-out" /><span></span> In-Out</label>
     </div>
   </div>
 
@@ -66,12 +66,14 @@ export default {
   },
 
   mounted () {
-    document.body.style.setProperty('--bodyBgColor', '#755e39');
-
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);
     });
+  },
+
+  activated () {
+    document.body.style.setProperty('--bodyBgColor', '#755e39');
   }
 }
 </script>
@@ -88,9 +90,46 @@ export default {
   }
   label {
     cursor: pointer;
+    display: flex;
+    margin: 4px 0;
+
+    input {
+      display: none;
+
+      &:checked + span::before {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+      }
+    }
+    span {
+      align-items: center;
+      background-color: lighten(rebeccapurple, 50);
+      border: {
+        color: rebeccapurple;
+        radius: 20px;
+        style: solid;
+        width: 2px;
+      }
+      display: flex;
+      height: 20px;
+      justify-content: center;
+      margin: 0 10px;
+      width: 20px;
+
+      &::before {
+        background-color: rebeccapurple;
+        border-radius: 20px;
+        content: '';
+        height: 75%;
+        opacity: 0;
+        transform: scale3d(0, 0, 0);
+        transition: var(--speedNormal);
+        width: 75%;
+      }
+    }
   }
-  .transitions {
-    text-align: right;
+  .transitions label {
+    justify-content: flex-end;
   }
 }
 
@@ -133,11 +172,19 @@ export default {
 }
 .rick {
   background-image: url('/images/rick.png');
-  border: 7px solid #abd5ea;
+  border: {
+    color: #abd5ea;
+    style: solid;
+    width: 7px;
+  }
 }
 .picklerick {
   background-image: url('/images/picklerick.png');
-  border: 7px solid #4e8125;
+  border: {
+    color: #4e8125;
+    style: solid;
+    width: 7px;
+  }
 }
 
 .picklequote {

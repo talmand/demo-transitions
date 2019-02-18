@@ -84,7 +84,7 @@ export default {
     }
   },
 
-  mounted: function () {
+  activated: function () {
     document.body.style.setProperty('--bodyBgColor', '#274231');
   }
 }
@@ -107,7 +107,12 @@ export default {
 }
 
 .states-list {
-  border: 2px solid #333;
+  background-color: #f5f5f5;
+  border: {
+    color: #333;
+    style: solid;
+    width: 2px;
+  }
   height: 200px;
   list-style-type: none;
   margin: 0;
@@ -116,6 +121,7 @@ export default {
 
   li {
     background-color: #f5f5f5;
+    color: #333;
     display: flex;
     font-size: 14px;
     justify-content: space-around;
@@ -129,13 +135,17 @@ export default {
     }
   }
 
-  .list-item {
-    padding: 5px 5px 5px 10px;
+  .list-item span {
+    padding: 5px 10px;
   }
 
   .header {
     background-color: #f5f5f5 !important;
-    border-bottom: 1px solid #333;
+    border-bottom: {
+      color: #333;
+      style: solid;
+      width: 1px;
+    }
     cursor: pointer;
     margin-top: 0;
     padding: 0;
@@ -143,7 +153,7 @@ export default {
     top: 0;
 
     span {
-      padding: 10px 10px 0 10px;
+      padding: 5px 10px;
       transition: var(--speedNormal);
     }
 
@@ -162,6 +172,7 @@ export default {
   transform: translate3d(40px, 0, 0);
 }
 .list-move {
+  opacity: 0.5;
   transition: transform var(--speedSlow);
 }
 </style>

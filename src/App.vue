@@ -8,10 +8,20 @@
       :isActive="activateOptionsPanel"
       :slides="slides"
       :styles="styles"
+      ref="options"
     />
 
+    <button :class="{active: isFullscreen}" class="fullscreen" @click="toggleFullscreen">
+      <span class="arrow upper-left"></span>
+      <span class="arrow upper-right"></span>
+      <span class="arrow lower-right"></span>
+      <span class="arrow lower-left"></span>
+    </button>
+
     <transition :name="slideAnimation" mode="out-in" appear>
-      <component :is='currentComponent' />
+      <keep-alive>
+        <component :is='currentComponent' />
+      </keep-alive>
     </transition>
 
     <div id="panel">
@@ -49,6 +59,7 @@ export default {
       currentComponent: 'slide-title',
       currentSlide: 0,
       isDark: false,
+      isFullscreen: false,
       nextActive: false,
       prevActive: false,
       slides: ['slide-title', 'slide-explanation', 'slide-simple-example', 'slide-applied-classes', 'slide-named-transitions', 'slide-dynamic-named-transitions', 'slide-css-library', 'slide-javascript-hooks', 'slide-list-transitions', 'slide-list-transitions-code', 'slide-control-speed', 'slide-credits'],
@@ -60,8 +71,11 @@ export default {
   methods: {
     nextSlide: function () {
       if (this.currentSlide < this.slides.length - 1) {
+        // update which slide is displayed
         this.currentSlide++;
-        this.currentComponent = this.slides[this.currentSlide];
+        // force a hash change for our simple router
+        window.location.hash = this.slides[this.currentSlide];
+        // change css variables to support different transition effects
         document.body.style.setProperty('--slideEnter', '400px');
         document.body.style.setProperty('--slideLeave', '-400px');
         document.body.style.setProperty('--slideZEnter', '100px');
@@ -74,8 +88,11 @@ export default {
     },
     prevSlide: function () {
       if (!this.currentSlide <= 0) {
+        // update which slide is displayed
         this.currentSlide--;
-        this.currentComponent = this.slides[this.currentSlide];
+        // force a hash change for our simple router
+        window.location.hash = this.slides[this.currentSlide];
+        // change css variables to support different transition effects
         document.body.style.setProperty('--slideEnter', '-400px');
         document.body.style.setProperty('--slideLeave', '400px');
         document.body.style.setProperty('--slideZEnter', '-300px');
@@ -89,27 +106,43 @@ export default {
     getHash: function () {
       // here we have a simple router
       // based on the hash matching an available slide
-      // should I just use this for changing slides??
       let hash = window.location.hash.replace(/^#/, '');
+      let index = this.slides.indexOf(hash);
     
-      if (this.slides.includes(hash)) {
+      if (index > -1) {
         this.currentComponent = hash;
-        this.currentSlide = this.slides.indexOf(hash);
+        this.currentSlide = index;
+        // update the slide select in the options panel to current slide
+        // placed in an if because $refs may not be available on render
+        if (this.$refs.options) {
+          this.$refs.options.slide = index;
+        }
+      }
+    },
+    toggleFullscreen: function () {
+      // note: you can use browser zooming to make slides larger or smaller as needed
+      const container = document.querySelector('#container');
+      this.isFullscreen = !this.isFullscreen;
+
+      if (this.isFullscreen) {
+        container.requestFullscreen();
+      } else {
+        document.exitFullscreen();
       }
     }
   },
 
-  created () {
+  mounted () {
     // just in case we start with a slide hash
     this.getHash();
-  },
 
-  mounted () {
     // emitted from options panel
     // jumps to selected slide
     this.$root.$on('options:skipToSlide', slide => {
+      // update current slide to what was passed in event
       this.currentSlide = slide;
-      this.currentComponent = this.slides[this.currentSlide];
+      // force a hash change for our simple router
+      window.location.hash = this.slides[this.currentSlide];
     });
 
     // emitted from options panel
@@ -151,9 +184,9 @@ export default {
       if (e.key === '`') {
         this.activateOptionsPanel = !this.activateOptionsPanel;
       }
-      // shortcuts to change out transition styles
-      if (['1', '2', '3', '4', '5'].includes(e.key)) {
-        this.slideAnimation = this.animations[e.key - 1];
+      // toggles fullscreen with spacebar
+      if (e.key === ' ') {
+        this.toggleFullscreen();
       }
     });
   }
@@ -191,7 +224,6 @@ body {
   --speedNormal: calc(300ms * var(--speedFactor));
   --speedSlow: calc(500ms * var(--speedFactor));
 
-  background-color: var(--bodyBgColor);
   color: #333;
   font-family: 'Roboto', 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 18px;
@@ -200,6 +232,11 @@ body {
   overflow: hidden;
   padding: 0;
   transition: background-color var(--speedSlow);
+
+  &:-webkit-full-screen {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 p {
@@ -220,6 +257,7 @@ p {
 
 #container {
   align-items: center;
+  background-color: var(--bodyBgColor);
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -290,6 +328,8 @@ p {
 
   .slides {
     color: white;
+    flex-grow: 1;
+    font-size: 18px;
     opacity: 0.25;
     text-align: center;
   }
@@ -396,6 +436,55 @@ p {
   }
 }
 
+.fullscreen {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 30px;
+  height: 30px;
+  line-height: 1;
+  opacity: 0.25;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+
+  &.active .arrow {
+    transform: rotate3d(0, 0, 1, 180deg);
+  }
+
+  .arrow {
+    height: 10px;
+    position: absolute;
+    width: 10px;
+  }
+  .upper-left {
+    border-left: 2px solid #fff;
+    border-top: 2px solid #fff;
+    left: 0;
+    top: 0;
+  }
+  .upper-right {
+    border-right: 2px solid #fff;
+    border-top: 2px solid #fff;
+    right: 0;
+    top: 0;
+  }
+  .lower-right {
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    bottom: 0;
+    right: 0;
+  }
+  .lower-left {
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #fff;
+    bottom: 0;
+    left: 0;
+  }
+}
+
 .slide {
   align-items: center;
   background-color: #f5f5f5;
@@ -438,10 +527,12 @@ p {
 .fade-enter-active,
 .fade-leave-active { transition: var(--speedNormal); }
 
-.slide-enter { opacity: 0; transform: translate3d(var(--slideEnter), 0, 0); }
+.slide-enter { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(var(--slideEnter), 0, 0); }
+.slide-enter-to { transform: scale3d(1, 1, 1); }
 .slide-enter-active,
-.slide-leave-active { transition: var(--speedNormal) cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-.slide-leave-to { opacity: 0; transform: translate3d(var(--slideLeave), 0, 0); }
+.slide-leave-active { transition: var(--speedSlow) cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+.slide-leave { transform: scale3d(1, 1, 1); }
+.slide-leave-to { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(var(--slideLeave), 0, 0); }
 
 .rotate-enter { transform: perspective(2000px) rotate3d(0, 1, 0, var(--rotateEnter)); }
 .rotate-enter-active, .rotate-leave-active { transition: var(--speedNormal) cubic-bezier(0.645, 0.045, 0.355, 1); }

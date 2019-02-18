@@ -78,12 +78,14 @@ export default {
   },
 
   mounted () {
-    document.body.style.setProperty('--bodyBgColor', '#422827');
-
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);
     });
+  },
+
+  activated () {
+    document.body.style.setProperty('--bodyBgColor', '#422827');
   }
 }
 </script>

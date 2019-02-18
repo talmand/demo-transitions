@@ -16,6 +16,7 @@
   transform: translate3d(40px, 0, 0);
 }
 .list-move {
+  opacity: 0.5;
   transition: transform 0.5s;
 }</textarea>
 
@@ -30,12 +31,14 @@ export default {
   name: 'slide-list-transitions-code',
 
   mounted () {
-    document.body.style.setProperty('--bodyBgColor', '#274231');
-
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);
     });
+  },
+
+  activated () {
+    document.body.style.setProperty('--bodyBgColor', '#274231');
   }
 }
 </script>

@@ -42,16 +42,25 @@ export default {
       animation: 1,
       style: 'atom-one-dark-reasonable',
       speedFactor: 1,
+      baseFontSize: '10px',
       speeds: [
         {factor: 0, display: '0%'},
         {factor: 2, display: '50%'},
         {factor: 1, display: '100%'},
         {factor: 0.5, display: '200%'}
+      ],
+      sizes: [
+        {size: '8px', display: 'small'},
+        {size: '10px', display: 'normal'},
+        {size: '12px', display: 'large'}
       ]
     }
   },
 
   methods: {
+    changeSpeed: function () {
+      document.body.style.setProperty('--speedFactor', this.speedFactor);
+    },
     changeStyle: function () {
       // this is for the highlight.js library
       // swaps out the current highlight stylesheet
@@ -67,9 +76,6 @@ export default {
           style.disabled = true;
         }
       });
-    },
-    changeSpeed: function () {
-      document.body.style.setProperty('--speedFactor', this.speedFactor)
     },
     toggleDark: function () {
       document.body.classList.toggle('dark-mode', this.darkMode);
@@ -90,7 +96,11 @@ export default {
 
 #options {
   background-color: #333;
-  border-right: 7px solid rebeccapurple;
+  border-right: {
+    color: rebeccapurple;
+    style: solid;
+    width: 7px;
+  }
   box-shadow: 0 0 0 0 rgba(0,0,0,0.75);
   display: flex;
   flex-direction: column;
@@ -118,14 +128,21 @@ export default {
 
 .toggle-panel {
   background: none;
-  border-radius: 7px;
-  border: 1px solid #fff;
+  border: {
+    color: #fff;
+    radius: 7px;
+    style: solid;
+    width: 1px;
+  }
   color: #fff;
   cursor: pointer;
   font-size: 20px;
+  height: 40px;
   line-height: 1;
   opacity: 0.25;
   position: absolute;
-  right: -60px;
+  right: -70px;
+  top: 10px;
+  width: 40px;
 }
 </style>

@@ -5,8 +5,8 @@
 
   <div class="example">
     <transition
-      enter-active-class="animated rotateInDownLeft"
-      leave-active-class="animated rotateOutUpRight"
+      enter-active-class="animated jackInTheBox"
+      leave-active-class="animated hinge"
       mode="out-in"
     >
       <div v-if="elseToggle" key="if">v-if example</div>
@@ -17,8 +17,8 @@
 
 <textarea is="pre-code"><transition
   name="custom-else-transitions"
-  enter-active-class="animated rotateInDownLeft"
-  leave-active-class="animated rotateOutUpRight"
+  enter-active-class="animated jackInTheBox"
+  leave-active-class="animated hinge"
   mode="out-in"
 >
   <div v-if="elseToggle" key="if">v-if example</div>
@@ -42,21 +42,29 @@ export default {
   },
 
   mounted () {
-    document.body.style.setProperty('--bodyBgColor', '#44364f');
-
     document.querySelectorAll('pre code').forEach(preCode => {
       // eslint-disable-next-line
       hljs.highlightBlock(preCode);
     });
+  },
+
+  activated () {
+    document.body.style.setProperty('--bodyBgColor', '#44364f');
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .example {
-  height: 60px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   margin: 20px;
   text-align: center;
   width: 75%;
+
+  div {
+    display: inline-block;
+  }
 }
 </style>
