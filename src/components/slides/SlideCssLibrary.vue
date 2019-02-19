@@ -10,7 +10,7 @@
       mode="out-in"
     >
       <div v-if="elseToggle" key="if">v-if example</div>
-      <div v-if="!elseToggle" key="else">v-else example</div>
+      <div v-else key="else">v-else example</div>
     </transition>
     <button class="example-button" @click="elseToggle = !elseToggle">toggle v-if/v-else</button>
   </div>
@@ -22,7 +22,7 @@
   mode="out-in"
 >
   <div v-if="elseToggle" key="if">v-if example</div>
-  <div v-if="!elseToggle" key="else">v-else example</div>
+  <div v-else key="else">v-else example</div>
 </transition></textarea>
 
   <p>No further CSS is required as the library handles that for us. We simply just tie the Vue transition classes to the library's animation classes.</p>
