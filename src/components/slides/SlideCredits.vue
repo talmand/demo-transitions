@@ -2,6 +2,8 @@
 <div class="slide">
   <h2>Credits</h2>
 
+  <p>More Info:<br /><a href="https://css-tricks.com/the-power-of-named-transitions-in-vue/">CSS-Tricks: The Power of Named Transitions</a></p>
+
   <p>Technologies:<br /><a href="https://cli.vuejs.org/">Vue CLI</a> | <a href="https://vuejs.org/v2/api/#transition">Transition Component</a> | <a href="https://vuejs.org/v2/api/#transition-group">Transition-Group</a> <br /> <a href="https://vuejs.org/v2/api/#is">Is Attribute</a> | <a href="https://vuejs.org/v2/guide/components.html#Dynamic-Components">Dynamic Components</a> | <a href="http://sass-lang.com/">SASS</a></p>
   
   <p>Libraries:<br /><a href="https://greensock.com/">greensock</a> | <a href="https://daneden.github.io/animate.css/">animate.css</a> | <a href="https://highlightjs.org/">highlight.js</a></p>

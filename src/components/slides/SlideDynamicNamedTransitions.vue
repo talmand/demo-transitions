@@ -2,8 +2,8 @@
 <div class="slide">
   <div class="bg-cards">
     <transition :name="currentTransition" :mode="currentMode">
-      <div v-if="toggle" class="rick" key="rick"></div>
-      <div v-else class="picklerick" key="picklerick"></div>
+      <div v-if="toggle" class="rick" key="rick"><img src="~@/assets/rick.png" /></div>
+      <div v-else class="picklerick" key="picklerick"><img src="~@/assets/picklerick.png" /></div>
     </transition>
   </div>
   <h2>Dynamic Named Transitions</h2>
@@ -27,9 +27,14 @@
 
   <div class="cards">
     <transition :name="currentTransition" :mode="currentMode">
-      <div v-if="toggle" class="rick" key="rick"></div>
+      <div v-if="toggle" class="rick" key="rick">
+        <img src="~@/assets/rick.png" />
+      </div>
       <div v-else class="picklerick" key="picklerick">
-        <div class="picklequote" :class="`quote${currentQuoteClass}`" :data-quote="quotes[currentQuote]" @animationend="onQuoteEnd"></div>
+        <div class="pickle">
+          <img src="~@/assets/picklerick.png" />
+          <div class="picklequote" :class="`quote${currentQuoteClass}`" :data-quote="quotes[currentQuote]" @animationend="onQuoteEnd"></div>
+        </div>
       </div>
     </transition>
   </div>
@@ -169,9 +174,13 @@ export default {
   position: absolute;
   top: 0;
   width: 180px;
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+  }
 }
 .rick {
-  background-image: url('/images/rick.png');
   border: {
     color: #abd5ea;
     style: solid;
@@ -179,7 +188,6 @@ export default {
   }
 }
 .picklerick {
-  background-image: url('/images/picklerick.png');
   border: {
     color: #4e8125;
     style: solid;
